@@ -29,12 +29,13 @@ exports.taskDelete = (req, res) => {
 
 exports.tasksUpdate = (req, res) => {
   //find the course
-  const { taskCkecked } = req.params;
-  const foundTask = tasks.find((task) => task.checked === +taskCkecked);
+  const { taskID } = req.params;
+  console.log("i am here" + taskID);
+  const foundTask = tasks.find((task) => task.id === +taskID);
   // check if course exists
   if (foundTask) {
     //update course
-    for (const key in req.body) foundTask[key] = req.body[key];
+    foundTask.checked = !req.body.checked;
     res.status(204).end();
   } else {
     res.status(404).json({ message: "task not found" });
