@@ -26,3 +26,17 @@ exports.taskDelete = (req, res) => {
   tasks = tasks.filter((_task) => _task.id !== +TaskID);
   res.status(204).end();
 };
+
+exports.tasksUpdate = (req, res) => {
+  //find the course
+  const { taskCkecked } = req.params;
+  const foundTask = tasks.find((task) => task.checked === +taskCkecked);
+  // check if course exists
+  if (foundTask) {
+    //update course
+    for (const key in req.body) foundTask[key] = req.body[key];
+    res.status(204).end();
+  } else {
+    res.status(404).json({ message: "task not found" });
+  }
+};
